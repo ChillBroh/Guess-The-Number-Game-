@@ -1,50 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guess The Number</title>
-    <!--Bootstrap CDN-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <header>
-      <button
-        type="button"
-        class="btn btn-primary again-btn btn-lg"
-        onclick="again()"
-      >
-        Again
-      </button>
-      <h2 class="between">Between 1 and 20</h2>
-      <h1 class="main-title">Guess My Number</h1>
-      <div class="number">?</div>
-    </header>
-    <main>
-      <section class="left">
-        <input type="number" class="input-check" /><br />
-        <button class="check-btn btn btn-danger btn-lg" onclick="input()">
-          Check
-        </button>
-      </section>
-      <section class="right">
-        <p class="guessing">Start Guessing....</p>
-        <p class="score-title">Score : <span class="score-value">20</span></p>
-        <p class="high-score-title">
-          High Score : <span class="high-score-value">0</span>
-        </p>
-      </section>
-    </main>
-    <footer>
-      <div>Made by Chill Broh</div>
-    </footer>
-    <script src="./script.js"></script>
-  </body>
-</html>
+"use strict";
+let generate = Math.trunc(Math.random() * 20) + 1;
+let score = 20;
+let highScore = 0;
+
+const input = () => {
+  const inputNum = Number(document.querySelector(".input-check").value);
+  console.log(generate, typeof generate);
+  console.log(inputNum, typeof inputNum);
+  if (!inputNum) {
+    message("Please enter a value");
+  }
+  //if entered number and generated number different
+  else if (inputNum !== generate) {
+    if (score > 1) {
+      message(check(generate, inputNum));
+      document.querySelector("body").style.backgroundColor = "red";
+
+      score--;
+      document.querySelector(".score-value").innerHTML = score;
+    } else {
+      if (score == 1) {
+        score--;
+        document.querySelector(".score-value").innerHTML = score;
+        message("You loss!");
+        document.querySelector(".input-check").readOnly = true;
+      }
+    }
+  }
+  //if numbers are matching
+  else if (inputNum === generate) {
+    if (score >= 1) {
+      message("Correct Number! you Won!");
+      document.querySelector(".number").innerHTML = generate;
+      document.querySelector("body").style.backgroundColor = "#60b347";
+      document.querySelector(".number").style.width = "200px";
+      document.querySelector(".number").style.marginLeft = "40%";
+
+      if (score > highScore) {
+        highScore = score;
+        document.querySelector(".high-score-value").innerHTML = score;
+      }
+      document.querySelector(".input-check").readOnly = true;
+    } else {
+      message("You Loss!");
+    }
+  }
+};
+
+const check = (gen, input) => {
+  const html = gen < input ? "Too high" : "Too low";
+  return html;
+};
+
+const message = (message) => {
+  document.querySelector(".guessing").innerHTML = message;
+};
+
+const again = () => {
+  score = 20;
+  generate = Math.trunc(Math.random() * 20) + 1;
+
+  // document.querySelector('.message').textContent = 'Start guessing...';
+  message("Start guessing...");
+  document.querySelector(".score-value").innerHTML = score;
+  document.querySelector(".number").innerHTML = "?";
+  document.querySelector(".input-check").readOnly = false;
+  document.querySelector(".input-check").value = "";
+  document.querySelector("body").style.backgroundColor = "#333";
+  document.querySelector(".number").style.width = "111px";
+};
