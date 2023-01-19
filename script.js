@@ -8,7 +8,7 @@ const input = () => {
   console.log(generate, typeof generate);
   console.log(inputNum, typeof inputNum);
   if (!inputNum) {
-    message("Please enter a value");
+    message("⛔️ Please enter a value");
   }
   //if entered number and generated number different
   else if (inputNum !== generate) {
@@ -30,7 +30,7 @@ const input = () => {
   //if numbers are matching
   else if (inputNum === generate) {
     if (score >= 1) {
-      message("Correct Number! you Won!");
+      message("🎉 Correct Number! you Won!");
       document.querySelector(".number").innerHTML = generate;
       document.querySelector("body").style.backgroundColor = "#60b347";
       document.querySelector(".number").style.width = "200px";
@@ -42,13 +42,13 @@ const input = () => {
       }
       document.querySelector(".input-check").readOnly = true;
     } else {
-      message("You Loss!");
+      message(" 💥 You Loss!");
     }
   }
 };
 
 const check = (gen, input) => {
-  const html = gen < input ? "Too high" : "Too low";
+  const html = gen < input ? "📈 Too high" : "📉 Too low";
   return html;
 };
 
@@ -61,7 +61,7 @@ const again = () => {
   generate = Math.trunc(Math.random() * 20) + 1;
 
   // document.querySelector('.message').textContent = 'Start guessing...';
-  message("Start guessing...");
+  message("🤔 Start guessing...");
   document.querySelector(".score-value").innerHTML = score;
   document.querySelector(".number").innerHTML = "?";
   document.querySelector(".input-check").readOnly = false;
