@@ -9,12 +9,13 @@ const input = () => {
   console.log(inputNum, typeof inputNum);
   if (!inputNum) {
     message("⛔️ Please enter a value");
+    document.querySelector(".guessing").style.color = "red";
   }
   //if entered number and generated number different
   else if (inputNum !== generate) {
     if (score > 1) {
       message(check(generate, inputNum));
-      document.querySelector("body").style.backgroundColor = "red";
+      document.querySelector(".guessing").style.color = "red";
 
       score--;
       document.querySelector(".score-value").innerHTML = score;
@@ -35,6 +36,7 @@ const input = () => {
       document.querySelector("body").style.backgroundColor = "#60b347";
       document.querySelector(".number").style.width = "200px";
       document.querySelector(".number").style.marginLeft = "40%";
+      document.querySelector(".guessing").style.color = "white";
 
       if (score > highScore) {
         highScore = score;
